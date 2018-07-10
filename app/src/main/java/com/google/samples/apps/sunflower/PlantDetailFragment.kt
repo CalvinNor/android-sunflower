@@ -24,6 +24,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 
 import com.google.samples.apps.sunflower.databinding.FragmentPlantDetailBinding
 import com.google.samples.apps.sunflower.utilities.InjectorUtils
@@ -35,11 +37,13 @@ import com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel
 class PlantDetailFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        val plantId = requireNotNull(arguments).getString(ARG_ITEM_ID)
+
+        // Retrieve the arguments safely.
+        val plantId = PlantDetailFragmentArgs.fromBundle(arguments).itemId
 
         val factory = InjectorUtils.providePlantDetailViewModelFactory(requireActivity(), plantId)
         val plantDetailViewModel = ViewModelProviders.of(this, factory)
@@ -55,6 +59,15 @@ class PlantDetailFragment : Fragment() {
             }
         }
 
+        // Navigation to Fragments / Activities
+        binding.detailsActivity.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_plant_detail_fragment_to_gardenActivity))
+
+        // OR
+        binding.detailsActivity.setOnClickListener {
+            // Some Analytics code, other stuff here
+            it.findNavController().navigate(R.id.action_plant_detail_fragment_to_gardenActivity)
+        }
+
         return binding.root
     }
 
@@ -64,16 +77,6 @@ class PlantDetailFragment : Fragment() {
          * The fragment argument representing the item ID that this fragment
          * represents.
          */
-        const val ARG_ITEM_ID = "item_id"
-
-        /**
-         * Create a new instance of PlantDetailFragment, initialized with a plant ID.
-         */
-        fun newInstance(plantId: String): PlantDetailFragment {
-
-            // Supply plant ID as an argument.
-            val bundle = Bundle().apply { putString(ARG_ITEM_ID, plantId) }
-            return PlantDetailFragment().apply { arguments = bundle }
-        }
+        const val ARG_ITEM_ID = "itemId"
     }
 }

@@ -23,9 +23,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
-import com.google.samples.apps.sunflower.PlantDetailFragment
-import com.google.samples.apps.sunflower.PlantListFragment
-import com.google.samples.apps.sunflower.R
+import androidx.navigation.findNavController
+import com.google.samples.apps.sunflower.*
 import com.google.samples.apps.sunflower.data.Plant
 import com.google.samples.apps.sunflower.databinding.ListItemPlantBinding
 
@@ -59,9 +58,17 @@ class PlantAdapter : ListAdapter<Plant, PlantAdapter.ViewHolder>(PlantDiffCallba
 
         fun bind(listener: View.OnClickListener, item: Plant) {
             binding.apply {
-                clickListener = listener
+                // Traditional way
+                // clickListener = listener
                 plant = item
                 executePendingBindings()
+            }
+
+            binding.root.setOnClickListener {
+                val safeDirection = PlantListFragmentDirections.Action_plant_list_fragment_to_plant_detail_fragment()
+                safeDirection.setItemId(item.plantId)
+
+                it.findNavController().navigate(safeDirection)
             }
         }
     }

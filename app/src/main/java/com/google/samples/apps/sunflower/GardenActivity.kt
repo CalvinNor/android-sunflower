@@ -58,6 +58,11 @@ class GardenActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        // Default behavior for Navigation when we don't have a Navigate Up button
+        // return Navigation.findNavController(this, R.id.garden_nav_fragment).navigateUp()
+
+        // This handles moving back to the previous fragment from Details,
+        // also handling opening the Drawer vs doing nothing
         return NavigationUI.navigateUp(drawerLayout,
                 Navigation.findNavController(this, R.id.garden_nav_fragment))
     }

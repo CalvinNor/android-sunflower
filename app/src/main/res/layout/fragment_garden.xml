@@ -39,4 +39,10 @@
         android:text="@string/garden_empty"
         android:textSize="24sp" />
 
+    <Button
+        android:id="@+id/nav_garden_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This will crash the application" />
+
 </FrameLayout>

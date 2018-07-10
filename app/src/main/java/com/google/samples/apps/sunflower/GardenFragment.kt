@@ -25,9 +25,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import com.google.samples.apps.sunflower.adapters.GardenPlantingAdapter
 import com.google.samples.apps.sunflower.utilities.InjectorUtils
 import com.google.samples.apps.sunflower.viewmodels.GardenPlantingListViewModel
+import kotlinx.android.synthetic.main.fragment_garden.view.*
 
 class GardenFragment : Fragment() {
 
@@ -39,6 +41,9 @@ class GardenFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_garden, container, false)
         val adapter = GardenPlantingAdapter(view.context)
         view.findViewById<RecyclerView>(R.id.garden_list).adapter = adapter
+        view.nav_garden_button.setOnClickListener {
+            it.findNavController().navigate(R.id.action_navigate_to_plant_list)
+        }
         subscribeUi(adapter)
         return view
     }
